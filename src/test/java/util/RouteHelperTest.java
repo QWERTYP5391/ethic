@@ -29,7 +29,7 @@ public class RouteHelperTest {
 
 
     @Test(expected = RuntimeException.class)
-    public void testGetDistanceAlongCertainRoute() {
+    public void testGetDistanceAlongCertainRouteWithNoSuchRoute() {
         int[][] matrix = loadTestMatrix();
 
         RouteHelper.getDistanceAlongCertainRoute("ABD", matrix);
@@ -37,7 +37,7 @@ public class RouteHelperTest {
     }
 
     @Test
-    public void testGetDistanceAlongCertainRouteWithNoSuchRoute() {
+    public void testGetDistanceAlongCertainRoute() {
         int[][] matrix = loadTestMatrix();
 
         int distanceAlongCertainRoute = RouteHelper.getDistanceAlongCertainRoute("ABC", matrix);
