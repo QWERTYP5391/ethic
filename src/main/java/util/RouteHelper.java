@@ -40,21 +40,22 @@ public class RouteHelper {
         int ways = 0;
         int secondTownIndex = getIndex(town2);
 
-        Queue<String> queue = new LinkedList<String>();
+        PriorityQueue<WeightedNode> queue = new PriorityQueue<WeightedNode>();
 
-        queue.add(String.valueOf(town1));
+        queue.add(new WeightedNode(String.valueOf(town1), 0));
 
         while (!queue.isEmpty()) {
             for (int i = 0; i < queue.size(); i++) {
-
-                String val = queue.remove();
-                int distanceAlongCertainRoute = getDistanceAlongCertainRoute(val, adjacencyMatrix);
+                WeightedNode weightedVal = queue.remove();
+                String val = weightedVal.getValue();
+                int distanceAlongCertainRoute = weightedVal.getWeight();
                 if (distanceAlongCertainRoute < distance) {
                     for (int j = 0; j < CHARACTER_SIZE; j++) {
                         int weight = adjacencyMatrix[(val.charAt(val.length() - 1)) - CHARACTER_OFFSET][j];
                         String route = val + getCharacter(j);
-                        if (weight != 0 && route.length() <= level + 1 && getDistanceAlongCertainRoute(route, adjacencyMatrix) < distance) {
-                            queue.add(route);
+                        int appendedWeight = weightedVal.getWeight() + weight;
+                        if (weight != 0 && route.length() <= level + 1 && appendedWeight < distance) {
+                            queue.add(new WeightedNode(route, appendedWeight));
                             if (j == secondTownIndex) {
                                 ways++;
                             }
