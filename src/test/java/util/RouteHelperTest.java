@@ -86,6 +86,18 @@ public class RouteHelperTest {
         assertThat(theShortestPathBetweenTwoRoutes, equalTo(expected));
     }
 
+    @Test
+    public void testGetTheShortestPathBetweenTwoRoutesWithNoSuchRoute() {
+        int[][] matrix = loadTestMatrix();
+
+        char firstTown = 'A';
+        char secondTown = 'Z';
+        int theShortestPathBetweenTwoRoutes = RouteHelper.getTheShortestPathBetweenTwoRoutes(firstTown, secondTown, matrix);
+        int expected = 0;
+
+        assertThat(theShortestPathBetweenTwoRoutes, equalTo(expected));
+    }
+
     private int[][] loadTestMatrix() {
         List<RouteNode> list = new ArrayList<RouteNode>();
 

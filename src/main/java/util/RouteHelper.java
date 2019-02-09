@@ -84,7 +84,7 @@ public class RouteHelper {
     public static int getTheShortestPathBetweenTwoRoutes(Character town1, Character town2, int[][] adjacencyMatrix) {
 
         int secondTownIndex = getIndex(town2);
-
+        int maxLevel = 10;
         PriorityQueue<WeightedNode> queue = new PriorityQueue<WeightedNode>();
 
         queue.add(new WeightedNode(String.valueOf(town1), 0));
@@ -96,7 +96,7 @@ public class RouteHelper {
                 for (int j = 0; j < CHARACTER_SIZE; j++) {
                     int weight = adjacencyMatrix[(val.charAt(val.length() - 1)) - CHARACTER_OFFSET][j];
                     String route = val + getCharacter(j);
-                    if (weight != 0) {
+                    if (weight != 0  && route.length() <= maxLevel) {
                         int distanceAlongCertainRoute = weightedVal.getWeight() + weight;
                         queue.add(new WeightedNode(route, distanceAlongCertainRoute));
                         if (j == secondTownIndex) {
