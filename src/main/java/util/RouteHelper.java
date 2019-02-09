@@ -41,7 +41,6 @@ public class RouteHelper {
         int secondTownIndex = getIndex(town2);
 
         Queue<String> queue = new LinkedList<String>();
-        Set<String> visited = new HashSet<String>();
 
 
         queue.add(String.valueOf(town1));
@@ -50,15 +49,13 @@ public class RouteHelper {
             for (int i = 0; i < queue.size(); i++) {
 
                 String val = queue.remove();
-                visited.remove(val);
                 int distanceAlongCertainRoute = getDistanceAlongCertainRoute(val, adjacencyMatrix);
                 if (distanceAlongCertainRoute < distance) {
                     for (int j = 0; j < CHARACTER_SIZE; j++) {
                         int weight = adjacencyMatrix[(val.charAt(val.length() - 1)) - CHARACTER_OFFSET][j];
                         String route = val + getCharacter(j);
-                        if (weight != 0 && !visited.contains(route) && route.length() <= level + 1 && getDistanceAlongCertainRoute(route, adjacencyMatrix) < distance) {
+                        if (weight != 0 && route.length() <= level + 1 && getDistanceAlongCertainRoute(route, adjacencyMatrix) < distance) {
                             queue.add(route);
-                            visited.add(route);
                             if (j == secondTownIndex) {
                                 ways++;
                             }
@@ -89,7 +86,6 @@ public class RouteHelper {
         int secondTownIndex = getIndex(town2);
 
         PriorityQueue<WeightedNode> queue = new PriorityQueue<WeightedNode>();
-        Set<String> visited = new HashSet<String>();
 
         queue.add(new WeightedNode(String.valueOf(town1), 0));
 
@@ -97,14 +93,12 @@ public class RouteHelper {
             for (int i = 0; i < queue.size(); i++) {
                 WeightedNode weightedVal = queue.remove();
                 String val = weightedVal.getValue();
-                visited.remove(val);
                 for (int j = 0; j < CHARACTER_SIZE; j++) {
                     int weight = adjacencyMatrix[(val.charAt(val.length() - 1)) - CHARACTER_OFFSET][j];
                     String route = val + getCharacter(j);
-                    if (weight != 0 && !visited.contains(route)) {
+                    if (weight != 0) {
                         int distanceAlongCertainRoute = getDistanceAlongCertainRoute(route, adjacencyMatrix);
                         queue.add(new WeightedNode(route, distanceAlongCertainRoute));
-                        visited.add(route);
                         if (j == secondTownIndex) {
                             return distanceAlongCertainRoute;
                         }
@@ -129,5 +123,4 @@ public class RouteHelper {
     }
 
 
-
-    }
+}
