@@ -63,6 +63,20 @@ public class RouteHelperTest {
     }
 
     @Test
+    public void testGetNumberOfRoutesBetweenTwoTownsWithNoSuchRoute() {
+        int[][] matrix = loadTestMatrix();
+
+        char firstTown = 'C';
+        char secondTown = 'Z';
+        int numberOfRoutesBetweenTwoTowns = RouteHelper.getNumberOfRoutesBetweenTwoTownsWithinThreeStops(firstTown, secondTown, matrix);
+        int expected = 0;
+
+        assertThat(numberOfRoutesBetweenTwoTowns, equalTo(expected));
+
+
+    }
+
+    @Test
     public void testGetNumberOfRoutesBetweenTwoTownsLessThanDistance() {
         int[][] matrix = loadTestMatrix();
 
@@ -72,6 +86,18 @@ public class RouteHelperTest {
         int numberOfRoutesBetweenTwoTownsLessThanDistance = RouteHelper.getNumberOfRoutesBetweenTwoTownsLessThanDistance(firstTown, secondTown, matrix, distance);
 
         assertThat(numberOfRoutesBetweenTwoTownsLessThanDistance, equalTo(7));
+    }
+
+    @Test
+    public void testGetNumberOfRoutesBetweenTwoTownsLessThanDistanceWithNoSuchRoute() {
+        int[][] matrix = loadTestMatrix();
+
+        char firstTown = 'C';
+        char secondTown = 'Z';
+        int distance = 30;
+        int numberOfRoutesBetweenTwoTownsLessThanDistance = RouteHelper.getNumberOfRoutesBetweenTwoTownsLessThanDistance(firstTown, secondTown, matrix, distance);
+
+        assertThat(numberOfRoutesBetweenTwoTownsLessThanDistance, equalTo(0));
     }
 
     @Test
