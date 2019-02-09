@@ -9,7 +9,32 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String csvFile = "graph.csv";
+        String file = "graph.csv";
+        List<RouteNode> routeNodes = loadData(file);
+
+        String distanceAlongCertainRouteInput = "ABC";
+        char firstRouteInput = 'C';
+        char secondRouteInput = 'C';
+        char firstShortestPathRouteInput = 'A';
+        char secondShortestPathRouteInput = 'C';
+
+        int[][] adjacencyMatrix = RouteHelper.generateAdjacencyMatrix(routeNodes);
+        int distanceAlongCertainRoute = RouteHelper.getDistanceAlongCertainRoute(distanceAlongCertainRouteInput, adjacencyMatrix);
+        int numberOfRoutesBetweenTwoTownsWithinThreeStops = RouteHelper.getNumberOfRoutesBetweenTwoTownsWithinThreeStops(firstRouteInput, secondRouteInput, adjacencyMatrix);
+        int distance = 30;
+        int numberOfRoutesBetweenTwoTownsLessThanDistance = RouteHelper.getNumberOfRoutesBetweenTwoTownsLessThanDistance(firstRouteInput, secondRouteInput, adjacencyMatrix, distance);
+        int theShortestPathBetweenTwoRoutes = RouteHelper.getTheShortestPathBetweenTwoRoutes(firstShortestPathRouteInput, secondShortestPathRouteInput, adjacencyMatrix);
+
+
+        System.out.println("The distance of route " + distanceAlongCertainRouteInput + " is " + distanceAlongCertainRoute);
+        System.out.println("The number of routes between " + firstRouteInput + " and " + secondRouteInput + " is " + numberOfRoutesBetweenTwoTownsWithinThreeStops);
+        System.out.println("The number of routes between " + firstRouteInput + " and " + secondRouteInput + " within " + distance + " is " + numberOfRoutesBetweenTwoTownsLessThanDistance);
+        System.out.println("The shortest path between " + firstShortestPathRouteInput + " and " + secondShortestPathRouteInput + " is " + theShortestPathBetweenTwoRoutes);
+
+
+    }
+
+    private static List<RouteNode> loadData(String file) {
         BufferedReader br = null;
         String line;
         String cvsSplitBy = ",";
@@ -18,7 +43,7 @@ public class Main {
 
         try {
 
-            br = new BufferedReader(new InputStreamReader(Main.class.getResourceAsStream(csvFile)));
+            br = new BufferedReader(new InputStreamReader(Main.class.getResourceAsStream(file)));
             while ((line = br.readLine()) != null) {
                 String replace = line.replaceAll(regex, "");
                 String[] nodes = replace.split(cvsSplitBy);
@@ -47,27 +72,7 @@ public class Main {
                 }
             }
         }
-
-        String distanceAlongCertainRouteInput = "ABC";
-        char firstRouteInput = 'C';
-        char secondRouteInput = 'C';
-        char firstShortestPathRouteInput = 'A';
-        char secondShortestPathRouteInput = 'C';
-
-        int[][] adjacencyMatrix = RouteHelper.generateAdjacencyMatrix(routeNodes);
-        int distanceAlongCertainRoute = RouteHelper.getDistanceAlongCertainRoute(distanceAlongCertainRouteInput, adjacencyMatrix);
-        int numberOfRoutesBetweenTwoTownsWithinThreeStops = RouteHelper.getNumberOfRoutesBetweenTwoTownsWithinThreeStops(firstRouteInput, secondRouteInput, adjacencyMatrix);
-        int distance = 30;
-        int numberOfRoutesBetweenTwoTownsLessThanDistance = RouteHelper.getNumberOfRoutesBetweenTwoTownsLessThanDistance(firstRouteInput, secondRouteInput, adjacencyMatrix, distance);
-        int theShortestPathBetweenTwoRoutes = RouteHelper.getTheShortestPathBetweenTwoRoutes(firstShortestPathRouteInput, secondShortestPathRouteInput, adjacencyMatrix);
-
-
-        System.out.println("The distance of route " + distanceAlongCertainRouteInput + " is " + distanceAlongCertainRoute);
-        System.out.println("The number of routes between " + firstRouteInput + " and " + secondRouteInput + " is " + numberOfRoutesBetweenTwoTownsWithinThreeStops);
-        System.out.println("The number of routes between " + firstRouteInput + " and " + secondRouteInput + " within " + distance + " is " + numberOfRoutesBetweenTwoTownsLessThanDistance);
-        System.out.println("The shortest path between " + firstShortestPathRouteInput + " and " + secondShortestPathRouteInput + " is " + theShortestPathBetweenTwoRoutes);
-
-
+        return routeNodes;
     }
 
 

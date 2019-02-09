@@ -42,7 +42,6 @@ public class RouteHelper {
 
         Queue<String> queue = new LinkedList<String>();
 
-
         queue.add(String.valueOf(town1));
 
         while (!queue.isEmpty()) {
