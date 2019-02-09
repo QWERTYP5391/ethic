@@ -97,7 +97,7 @@ public class RouteHelper {
                     int weight = adjacencyMatrix[(val.charAt(val.length() - 1)) - CHARACTER_OFFSET][j];
                     String route = val + getCharacter(j);
                     if (weight != 0) {
-                        int distanceAlongCertainRoute = getDistanceAlongCertainRoute(route, adjacencyMatrix);
+                        int distanceAlongCertainRoute = weightedVal.getWeight() + weight;
                         queue.add(new WeightedNode(route, distanceAlongCertainRoute));
                         if (j == secondTownIndex) {
                             return distanceAlongCertainRoute;
