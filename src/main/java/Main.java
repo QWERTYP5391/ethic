@@ -3,6 +3,7 @@ import util.RouteHelper;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -35,42 +36,23 @@ public class Main {
     }
 
     private static List<RouteNode> loadData(String file) {
-        BufferedReader br = null;
         String line;
         String cvsSplitBy = ",";
         List<RouteNode> routeNodes = new ArrayList<RouteNode>();
         String regex = " ";
 
-        try {
-
-            br = new BufferedReader(new InputStreamReader(Main.class.getResourceAsStream(file)));
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(Main.class.getResourceAsStream(file)))) {
             while ((line = br.readLine()) != null) {
-                String replace = line.replaceAll(regex, "");
-                String[] nodes = replace.split(cvsSplitBy);
-                for (String node : nodes) {
-                    RouteNode routeNode = new RouteNode();
-                    if (node.length() == 3) {
-                        routeNode.setVertex(node.charAt(0));
-                        routeNode.setEdge(node.charAt(1));
-                        routeNode.setWeight(Character.getNumericValue(node.charAt(2)));
-                        routeNodes.add(routeNode);
-                    }
-
-                }
+                String[] nodes = line.replaceAll(regex, "").split(cvsSplitBy);
+                Arrays.stream(nodes).filter(node -> node.length() == 3).
+                        forEach(node -> routeNodes.add(new RouteNode(node.charAt(0), node.charAt(1), Character.getNumericValue(node.charAt(2)))));
             }
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return routeNodes;
     }
